@@ -1,0 +1,32 @@
+{
+	"name": "steve/calendar",
+    "type": "phpbb-extension",
+    "description": "An Extension for phpBB that will add a calendar to your phpBB forum.",
+    "homepage": "https://steven-clark.tech/phpBB3",
+    "version": "0.9.5-dev",
+    "time": "2025-4-5",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Steven Clark",
+            "email": "",
+            "homepage": "https://steven-clark.tech/phpBB3",
+            "role": "Author / Developer"
+        }
+    ],
+    "require": {
+        "php": ">=7.1"
+    },
+    "extra": {
+        "display-name": "Events Calendar",
+        "soft-require": {
+            "phpbb/phpbb": ">=3.3.0, <4.0.0@dev"
+        },
+		"version-check": {
+			"host": "www.steven-clark.tech",
+			"directory": "/version_check",
+			"filename": "calendar_version.json",
+			"ssl": true
+		}		
+    }
+}

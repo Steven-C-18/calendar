@@ -1,0 +1,59 @@
+{% if loops.calendar|length %}
+
+{% for calendar in loops.calendar %}
+{% if VIEW_YEAR %}
+<div class="{% if calendar.S_ROW_COUNT is even %}column1{% else %}column2{% endif %}">
+{% endif %}
+
+<div id="months" class="calendar{% if not VIEW_YEAR %} calendar-month{% endif %}">
+    <div class="month">
+		<a href="{{ calendar.URL }}">{{ calendar.MONTH_STRING }}</a>
+    </div>
+	
+    <div class="day">
+	{% for week_days in calendar.week_days %}
+		<span class="days">{{ week_days.DAYS }}</span>
+	{% endfor %}
+	{% for months in calendar.months %}
+		{% for padding in months.padding %}
+		{{ padding.PADDING }}
+		{% endfor %}
+		{% if months.DAYS %}
+		<a href="{{ months.URL }}" {% if months.NOW_DAY %}class="event-now"{% endif %} title="{{ months.TITLE }}">
+			<span><time datetime="{{ months.YR_M_D }}">{{ months.DAYS }}</time></span>
+			{% if months.CLASS  %}
+			<i class="icon icon-tiny event-status {{ months.FA }} {{ months.CLASS }} fa-fw" aria-hidden="true"></i> 
+			{% endif %}
+			
+			{{ months.ACTIVE_DAY }}
+			
+			{% if months.BIRTHDAY %} 
+				<i class="icon icon-tiny event-status fa-birthday-cake icon-orange fa-fw" aria-hidden="true" style="margin-left: 5px;"></i>
+			{% endif %}
+			{% if months.WORLD_DATE %} 
+				<i class="icon icon-tiny event-status fa-globe icon-blue fa-fw" aria-hidden="true"></i> 
+			{% endif %}	
+		</a>
+		{% endif %}
+	{% endfor %}
+    </div>
+</div>
+{% if VIEW_YEAR %}
+</div>
+{% endif %}
+{% if not VIEW_YEAR %}
+	<div class="panel">
+		<div class="inner">
+			<span style="float: left;" class="arrow previous"><a href="{{ PREV_MONTH_URL }}" class="button button-icon-only" rel="prev" role="button"><i class="icon fa-chevron-left fa-fw" aria-hidden="true"></i><span>{{ PREV_MONTH }}</span></a></span>
+			<span style="float: right;" class="arrow next"><a href="{{ NEXT_MONTH_URL }}" class="button button-icon-only"  rel="next" role="button"><span style="float: left;">{{ NEXT_MONTH }}</span><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i></a></span>
+			{% if DAY %}
+			<hr class="dashed" />
+			<a href="{{ PREV_DAY_URL }}">{{ PREV_DAY }} <i class="icon fa-chevron-circle-left" aria-hidden="true"></i></a> 
+			<a href="{{ DAY_URL }}">{{ DAY }}</a> 
+			<a href="{{ NEXT_DAY_URL }}"> <i class="icon fa-chevron-circle-right" aria-hidden="true"></i> {{ NEXT_DAY }}</a>
+			{% endif %}
+		</div>
+	</div>
+{% endif %}
+{% endfor %}
+{% endif %}

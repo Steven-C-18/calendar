@@ -1,0 +1,26 @@
+			
+			<div class="dropdown-container dropdown-left" style="float: right">
+			
+			{{ lang('EVENT_BY') }}{{ lang('COLON') }} {% if events.USER_AVATAR_URL %}<a href="{{ events.USER_AVATAR_URL }}" class="header-avatar">{{ events.USER_AVATAR }}</a>{% endif %} {{ events.USER_NAME }}
+			
+			{% if events.U_EDIT or events.U_DELETE or events.U_ATTEND %}
+			<a href="#" class="dropdown-trigger" title=""><i class="icon fa-caret-down fa-fw" aria-hidden="true"></i>{{ lang('OPTIONS') }}</a>
+			
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+					<ul class="dropdown-contents">
+						{% if events.U_EDIT %}
+						<li><a href="{{ events.U_EDIT }}"><i class="icon fa-pencil-square-o fa-fw" aria-hidden="true"></i>{{ lang('EDIT_EVENT') }}</a></li>
+						{% endif %}							
+						{% if events.U_DELETE %}
+						<li><a id="delete_event_{{ events.EVENT_ID }}" href="{{ events.U_DELETE }}" data-refresh="true" data-ajax="delete_event"><i class="icon icon-red fa-calendar-minus-o fa-fw" aria-hidden="true"></i>{{ lang('DELETE_EVENT') }}</a></li>
+						{% endif %}								
+						{% if events.U_ATTEND %}
+						<li><a id="attend_{{ events.EVENT_ID }}" href="{{ events.U_ATTEND }}" data-refresh="true" data-ajax="attend" title="{{ lang('ATTEND_EVENT') }}"><i class="icon icon-green fa-user-plus fa-fw" aria-hidden="true"></i>{{ lang('ATTEND_EVENT') }}</a></li>
+						{% endif %}
+					</ul>
+			</div>
+			{% endif %}
+		
+			</div>
+			

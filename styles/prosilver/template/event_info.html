@@ -1,0 +1,26 @@
+			{% INCLUDE 'calendar_options_menu.html' %}
+			
+			{% if events.WORLD_DATE %} 
+				<i class="icon event-status fa-globe icon-blue fa-fw" aria-hidden="true"></i> 
+			{% endif %}
+			
+			{% if events.BIRTHDAY %}
+				<i class="icon fa-birthday-cake icon-orange fa-fw" aria-hidden="true"></i>
+			{% endif %}
+			
+			<a href="{{ events.U_EVENT }}" class="forumtitle">
+				<i class="icon {{ events.FA }} {{ events.CLASS }} fa-fw" aria-hidden="true"></i> {{ events.TITLE }}
+			</a>
+			
+			<br><strong>{{ events.DAY_STRING }} {{ events.DAY }}</strong> 
+			
+			<br><strong>{{ lang('TIME') ~ lang('COLON') }}</strong>
+			
+			{{ events.TIME }} {{ events.TIME_STAMP }}
+			{% if events.TIME_STAMP_END %}{{ lang('COMMA_SEPARATOR') }}{{ lang('EVENT_ENDS') ~ lang('COLON') }} {{ events.TIME_STAMP_END }}{% endif %} {{ events.TIME_ZONE }}
+			
+			{% if events.EVENT_START_DAYS %}
+			<br>{{ events.EVENT_START_DAYS }}{% if events.EVENT_PERIOD_DAYS %}{{ lang('COMMA_SEPARATOR') }}{% endif %} {{ events.EVENT_PERIOD_DAYS }}
+			{% endif %}
+			
+			<div class="content post" style="font-size: 12px;">{{ events.INFORMATION }}</div>

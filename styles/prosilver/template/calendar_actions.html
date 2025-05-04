@@ -1,0 +1,125 @@
+{% INCLUDE 'overall_header.html' %}
+
+<form id="postform" action="{{ U_ACTION }}" method="post">
+
+	<div id="phpbb_alert1" class=" error phpbb_alert" {% if S_ERROR %} style="display: block;"{% endif %}>
+		<a href="#" id="error-popup" class="alert_close"><i class="icon fa-times-circle fa-fw" aria-hidden="true"></i></a>
+		<h3>{{ lang('WARNING') }}</h3>
+		<p>{{ S_ERROR }}</p>
+	</div>
+	
+	<div class="panel bg3">
+		<div class="inner">
+			<fieldset class="field">
+				<dl>
+					<dt><label for="title">{{ lang('TITLE') }}{{ lang('COLON') }}</label></dt>
+					<dd><input type="text" name="title" id="title" size="25" maxlength="100" value="{{ TITLE }}" class="inputbox autowidth" /></dd>
+				</dl>
+				<dl>
+					<dt><label for="year">{{ lang('YEAR') }}{{ lang('COLON') }}</label></dt>
+					<dd>{{ lang('EVENT_START') }} <input type="number" name="year" id="year" max="9999" min="1" value="{{ YEAR }}" class="inputbox autowidth" />
+					{{ lang('EVENT_END') }} <input type="number" name="year_end" id="year_end" max="9999" value="{{ YEAR_END }}" class="inputbox autowidth" /></dd>
+				</dl>
+				<dl>
+					<dt><label>{{ lang('MONTH') }}{{ lang('COLON') }}</label></dt>
+					<dd>
+					{{ lang('EVENT_START') }}
+						<select name="month_string">
+							{{ S_MONTH_OPTION }}
+						</select>
+					{{ lang('EVENT_END') }}
+						<select name="month_string_end">
+							{{ S_MONTH_END_OPTION }}
+						</select>
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="day">{{ lang('EVENT_START_DAY_TIME') }}{{ lang('COLON') }}</label></dt>
+					<dd>{{ lang('DAY') }} <input type="number" name="day" id="day" max="31" min="1" value="{{ DAY }}" class="inputbox autowidth" /> 
+						{{ lang('EVENT_HOUR') }} <select name="hour">{{ S_HOUR_OPTIONS }}</select> 
+						{{ lang('COLON') }} <select name="minute">{{ S_MIN_OPTIONS }}</select> {{ lang('EVENT_MINUTE') }}
+					</dd>
+				</dl>
+				<dl>
+					<dt><label for="day">{{ lang('EVENT_END_DAY_TIME') }}{{ lang('COLON') }}</label></dt>
+					<dd>{{ lang('DAY') }} <input type="number" name="day_end" id="day_end" max="31" min="0" value="{{ DAY_END }}" class="inputbox autowidth" /> 
+						{{ lang('EVENT_HOUR') }} <select name="hour_end">{{ S_HOUR_END_OPTIONS }}</select> 
+						{{ lang('COLON') }} <select name="minute_end">{{ S_MIN_END_OPTIONS }}</select> {{ lang('EVENT_MINUTE') }}
+					</dd>
+				</dl>
+				<!-- INCLUDE timezone_option.html -->
+				<dl>
+					<dt><label for="annual">{{ lang('ANNUAL') }}{{ lang('COLON') }}</label></dt>
+					<dd><input type="radio" class="radio" name="annual" value="1" {% if ANNUAL %} id="annual" checked="checked"{% endif %}/> {{ lang('YES') }} &nbsp;
+						<input type="radio" class="radio" name="annual" value="0" {% if not ANNUAL %} id="annual" checked="checked"{% endif %} /> {{ lang('NO') }}</dd>
+				</dl>
+				<dl>
+					<dt><label for="world_date">{{ lang('EVENT_WORLD_DAY') }}{{ lang('COLON') }}</label></dt>
+					<dd><input type="radio" class="radio" name="world_date" value="1" {% if WORLD_DATE %} id="world_date" checked="checked"{% endif %}/> {{ lang('YES') }} &nbsp;
+						<input type="radio" class="radio" name="world_date" value="0" {% if not WORLD_DATE %} id="world_date" checked="checked"{% endif %} /> {{ lang('NO') }}</dd>
+				</dl>
+				<dl>
+					<dt><label for="birthday">{{ lang('BIRTHDAY') }}{{ lang('COLON') }}</label></dt>
+					<dd><input type="radio" class="radio" name="birthday" value="1" {% if BIRTHDAY %} id="birthday" checked="checked"{% endif %}/> {{ lang('YES') }} &nbsp;
+						<input type="radio" class="radio" name="birthday" value="0" {% if not BIRTHDAY %} id="birthday" checked="checked"{% endif %} /> {{ lang('NO') }}</dd>
+				</dl>				
+				<dl>
+					<dt><label for="attend">{{ lang('ATTEND_EVENT') }}{{ lang('COLON') }}</label></dt>
+					<dd><input type="radio" class="radio" name="attend" value="1" {% if ATTEND %} id="attend" checked="checked"{% endif %}/> {{ lang('YES') }} &nbsp;
+						<input type="radio" class="radio" name="attend" value="0" {% if not ATTEND %} id="attend" checked="checked"{% endif %} /> {{ lang('NO') }}</dd>
+				</dl>				
+			</fieldset>
+		</div>
+	</div>
+	
+	<div class="panel">
+		<div class="inner">
+		<h2>{{ lang('EVENT_INFORMATION') }}</h2>
+		
+		<fieldset class="field">
+			{% INCLUDE 'posting_buttons.html' %}
+
+			<div id="smiley-box" class="smiley-box">
+			{% if loops.smiley|length %}
+			<strong>{{ lang('SMILIES') }}</strong><br>
+			{% for smiley in loops.smiley %}
+			<a href="#" onclick="insert_text('{{ smiley.A_SMILEY_CODE }}', true); return false;"><img src="{{ smiley.SMILEY_IMG }}" width="{{ smiley.SMILEY_WIDTH }}" height="{{ smiley.SMILEY_HEIGHT }}" alt="{{ smiley.SMILEY_CODE }}" title="{{ smiley.SMILEY_DESC }}" /></a>
+			{% endfor %}
+			
+			<br /><a href="{{ U_MORE_SMILIES }}" onclick="popup(this.href, 750, 350, '_phpbbsmilies'); return false;">{{ lang('MORE_SMILIES') }}</a>
+			{% endif %}
+			{% if BBCODE_STATUS %}
+			<div class="bbcode-status">
+				{% if loops.smiley|length %}<hr>{% endif %}
+				{{ BBCODE_STATUS }}<br>
+				{% if S_BBCODE_ALLOWED %}
+					{{ IMG_STATUS }}<br>
+					{{ FLASH_STATUS }}<br>
+					{{ URL_STATUS }}<br>
+				{% endif %}
+				{{ SMILIES_STATUS }}
+			</div>
+			{% endif %}			
+			</div>
+
+			<div id="message-box" class="message-box">
+				<textarea name="information" style="height: 14em;" id="message" rows="15" cols="65" tabindex="4" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onfocus="initInsertions();" class="inputbox">{{ INFORMATION }}</textarea>
+			</div>
+				
+			</fieldset>
+		</div>
+	</div>
+	
+	<div class="panel bg2">
+		<div class="inner">					
+			<fieldset class="submit-buttons">
+				{{ S_FORM_TOKEN }}
+				<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}" />&nbsp;
+				<input type="submit" name="submit" value="{{ lang('SUBMIT') }}" class="button1" />
+			</fieldset>
+		</div>
+	</div>
+			
+</form>
+
+{% INCLUDE 'overall_footer.html' %}

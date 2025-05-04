@@ -1,0 +1,6 @@
+{% if CALENDAR %}
+<script>
+	var calendarMonth = '{{ THIS_MONTH_NUM }}';
+</script>
+{% INCLUDEJS '@steve_calendar/js/events_ajax.js' %}
+{% endif %}

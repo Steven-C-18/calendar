@@ -1,0 +1,167 @@
+
+{% if loops.calendar|length %}
+<div id="calendar-top"></div>
+
+	{% if U_CALENDAR_COLLAPSE_URL %}
+	<div class="forabg" id="collapse_calendar">
+		<div class="inner" style="padding: 5px;">	
+			<a href="{{ U_CALENDAR_COLLAPSE_URL }}" 
+				data-hidden="{{ S_CALENDAR_HIDDEN }}"
+				data-ajax="phpbb_collapse_calendar"
+				style="float: right;color: white;font-size: 14px;text-decoration: none;">
+				{{ lang('CALENDAR') }} <i class="fa {% if S_CALENDAR_HIDDEN %}fa-plus-square{% else %}fa-minus-square{% endif %}" style="font-size: 14px;"></i>
+			</a>
+		</div>
+	</div>
+	{% endif %}
+
+<div id="collapsible-calendar" {% if S_CALENDAR_HIDDEN %}class="hidden"{% endif %} style="margin: 5px 0;padding: 3px;border-radius: 5px;">
+
+<div class="panel">
+	<div class="inner">
+		<span style="float: right;"><a href="#" id="calendar-toggle-column-one" title="{{ lang('CALENDAR_TOGGLE_RIGHT') }}">{{ lang('CALENDAR_TOGGLE_RIGHT') }} <i class="icon fa-toggle-on icon-red fa-fw" aria-hidden="true"></i></a></span>
+		<span style="float: left;"><a href="#" id="calendar-toggle-column-two" title="{{ lang('CALENDAR_TOGGLE_LEFT') }}"><i class="icon fa-toggle-on fa-rotate-180 icon-red fa-fw" aria-hidden="true"></i> {{ lang('CALENDAR_TOGGLE_LEFT') }}</a></span>
+	</div>
+</div>
+
+{% if S_INDEX %}
+<div class="column1" id="calendar-column-one">
+{% endif %}
+
+	<div class="panel">
+		<div class="inner">
+			<div  style="margin: 0 auto;text-align: center;">
+			<span class="event-status">
+				<i class="icon fa-globe icon-blue fa-fw" aria-hidden="true"></i>{{ lang('EVENT_WORLD_DAY') }}
+				{% if CALENDAR_ENABLE_BIRTHDAYS %}
+				<i class="icon annual-event fa-birthday-cake icon-orange fa-fw" aria-hidden="true"></i>{{ lang('CALENDAR_BIRTHDAYS') }}
+				{% endif %}
+				<i class="icon annual-event fa-calendar fa-fw" aria-hidden="true"></i>{{ lang('CALENDAR_ANNUAL') }}
+				<a href="{{ NOW_URL }}"><i class="icon event-now fa-calendar-check-o fa-fw" aria-hidden="true"></i>{{ lang('CALENDAR_NOW') }}</a>
+				<i class="icon fa-calendar-check-o active-event fa-fw" aria-hidden="true"></i>{{ lang('CALENDAR_ACTIVE') }}
+				<i class="icon expired-event fa-calendar-minus-o fa-fw" aria-hidden="true"></i>{{ lang('CALENDAR_EXPIRED') }}
+				{% if U_ADD_EVENT %}
+				<a href="{{ U_ADD_EVENT }}" class="hi-days"><i class="icon fa-calendar-plus-o icon-green fa-fw" aria-hidden="true"></i>{{ lang('ADD_EVENT') }}</a>
+				{% endif %}			
+			</span>
+		</div>	
+
+		<div id="months" style="background: #eee url('ext/steve/calendar/images/loader-large.gif') no-repeat center;background-size: 50px 50px;">
+	
+	{% for calendar in loops.calendar %}
+		<div id="months-{{ calendar.MONTH }}" class="calendar-month hidden">
+			
+			<div class="month">
+				<a href="{{ calendar.URL }}">{{ calendar.MONTH_STRING }} {{ NOW_YEAR }}</a>
+			</div>
+			
+			<div class="day">
+			{% for week_days in calendar.week_days %}
+				<span class="days">{{ week_days.DAYS }}</span>
+			{% endfor %}
+			{% for months in calendar.months %}
+				{% for padding in months.padding %}
+				{{ padding.PADDING }}
+				{% endfor %}
+				{% if months.DAYS %}
+				<a href="{{ months.URL }}" {% if months.NOW_DAY %}class="event-now"{% endif %} title="{{ months.TITLE }}">
+					<span><time datetime="{{ months.YR_M_D }}">{{ months.DAYS }}</time></span>
+					{% if months.CLASS  %}
+					<i class="icon icon-tiny event-status {{ months.FA }} {{ months.CLASS }} fa-fw" aria-hidden="true"></i> 
+					{% endif %}
+					{% if months.BIRTHDAY %} 
+					<i class="icon event-status icon-tiny fa-birthday-cake icon-orange fa-fw" aria-hidden="true"></i> 
+					{% endif %}
+					{% if months.WORLD_DATE %} 
+					<i class="icon event-status icon-tiny fa-globe icon-blue fa-fw" aria-hidden="true"></i> 
+					{% endif %}
+				</a>
+				{% endif %}
+
+			{% endfor %}
+		</div>
+	</div>
+	{% endfor %}
+	</div>
+	
+	<span style="float: left;margin-top: -10px;"><a id="prev-month" href="#calendar-top"><i class="icon  fa-arrow-circle-left icon-large fa-fw" style="font-size: 25px;" aria-hidden="true"></i></a></span>
+	<span style="float: right;margin-top: -10px;"><a id="next-month" href="#calendar-top"><i class="icon  fa-arrow-circle-right icon-large fa-fw" style="font-size: 25px;" aria-hidden="true"></i></a></span>
+
+	</div>
+</div>
+
+{% if S_INDEX %}	
+</div>
+<div class="column2" id="calendar-column-two">
+{% endif %}
+
+<div id="calendar-index-tabs" style="background: url('ext/steve/calendar/images/loader-large.gif') no-repeat center;background-size: 50px 50px;">
+	<div class="panel">
+		<div class="inner">
+		
+		{% if S_DISPLAY_SEARCH and U_SEARCH_CALENDAR %}
+		<div id="search-box1" class="search-box" role="search">
+			<form action="{{ U_SEARCH_CALENDAR }}" method="get" id="search_calendar">
+			<fieldset>
+				<input name="calendar_keywords" id="calendar_keywords" type="search" maxlength="128" title="{{ lang('SEARCH') }}" class="inputbox search tiny" size="20" value="{{ SEARCH_WORDS }}" placeholder="{{ lang('SEARCH_MINI') }}" />
+				<button class="button button-search" type="submit" title="{{ lang('SEARCH') }}">
+					<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">{{ lang('SEARCH') }}</span>
+				</button>
+				{{ S_SEARCH_HIDDEN_FIELDS }}
+				<input name="year" id="year" type="hidden" value="{{ CALENDAR_YEAR }}" />
+			</fieldset>
+			</form>
+		</div>
+		{% endif %}	
+			
+		{% if CALENDAR_ENABLE_BIRTHDAYS && S_DISPLAY_BIRTHDAY_LIST %}
+			<span style="float: right;"><a id="next-tab" href="#calendar-top" class="button"><span style="float: left;">{{ lang('NEXT') ~ ' ' ~ lang('TAB') }}</span><i class="icon fa-chevron-right fa-fw" aria-hidden="true"></i></a></span>
+		{% endif %}
+		
+		</div>
+	</div>	
+	<div class="calendar-month">
+	
+	<div class="panel scroller" style="height: 301px;overflow: auto;" id="index-tab-1">
+		<div class="inner">
+			<h3>{{ lang('EVENTS_FOR') }} {% if DAY_STRING %}{{ DAY_STRING }} {{ DAY_J }}{% endif %} {{ NOW_MONTH }} {{ NOW_YEAR }}</h3>
+			
+			{% for events in loops.events %}
+			<div id="event-{{ events.EVENT_ID }}">
+				
+				{% INCLUDE 'event_info.html' %}
+
+				<hr class="dashed" />
+				
+				</div>
+			{% else %}
+			{{ lang('NO_EVENTS') }}	
+		{% endfor %}
+		
+		</div>
+	</div>
+
+	</div>
+	
+	{% if CALENDAR_ENABLE_BIRTHDAYS && S_DISPLAY_BIRTHDAY_LIST %}
+	<div  class="calendar-month hidden" id="index-tab-2">	
+		<div class="panel scroller" style="min-height: 301px;overflow: auto;">
+			<div class="inner">
+			{% if S_DISPLAY_BIRTHDAY_LIST %}
+			<h3>{{ NOW_MONTH }} {{ lang('BIRTHDAYS') }}</h3>
+				<p>
+					{% if loops.calendar_birthdays|length %}{{ lang('CONGRATULATIONS') }}{{ lang('COLON') }} <strong>{% for calendar_birthdays in loops.calendar_birthdays %}{{ calendar_birthdays.USER }}{% if calendar_birthdays.AGE !== '' %} ({{ calendar_birthdays.AGE }}){% endif %}{% if not calendar_birthdays.S_LAST_ROW %}, {% endif %}{% endfor %}</strong>{% else %}{{ lang('NO_BIRTHDAYS') }}{% endif %}		
+				</p>
+			{% endif %}	
+			</div>
+		</div>
+	</div>
+	{% endif %}
+
+</div>
+{% if S_INDEX %}	
+</div>
+{% endif %}
+
+</div>
+{% endif %}

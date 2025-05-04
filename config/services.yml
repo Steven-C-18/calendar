@@ -1,0 +1,160 @@
+imports:
+    - { resource: tables.yml }
+
+services:
+    steve.calendar.calendar_view:
+        class: steve\calendar\controller\calendar_view
+        arguments:
+            - '@auth'
+            - '@config'
+            - '@controller.helper'
+            - '@language'
+            - '@pagination'
+            - '@template'            
+            - '@steve.calendar.calendar'
+            - '@steve.calendar.routing'
+
+    steve.calendar.actions:
+        class: steve\calendar\controller\actions
+        arguments:
+            - '@auth'
+            - '@config'
+            - '@dbal.conn'
+            - '@controller.helper'
+            - '@language'
+            - '@notification_manager'
+            - '@request'
+            - '@template'
+            - '@user'
+            - '@steve.calendar.event_posting'
+            - '@steve.calendar.date_time'
+            - '%steve.calendar.tables.calendar_events%'
+            - '%steve.calendar.tables.calendar_events_attending%'
+
+    steve.calendar.attend_event:
+        class: steve\calendar\controller\attend_event
+        arguments:
+            - '@auth'
+            - '@config'
+            - '@dbal.conn'
+            - '@controller.helper'
+            - '@language'
+            - '@notification_manager'
+            - '@request'
+            - '@user'
+            - '@steve.calendar.date_time'
+            - '%steve.calendar.tables.calendar_events%'
+            - '%steve.calendar.tables.calendar_events_attending%'
+
+    steve.calendar.calendar:
+        class: steve\calendar\calendar\calendar
+        arguments:
+            - '@auth'
+            - '@config'
+            - '@dbal.conn'
+            - '@controller.helper'
+            - '@language'
+            - '@pagination'
+            - '@request'
+            - '@template'
+            - '@user'
+            - '@steve.calendar.routing'
+            - '@steve.calendar.date_time'
+            - '%steve.calendar.tables.calendar_events%'
+            - '%steve.calendar.tables.calendar_events_attending%'
+            
+    steve.calendar.search:
+        class: steve\calendar\controller\search
+        arguments:
+            - '@auth'
+            - '@config'
+            - '@dbal.conn'
+            - '@controller.helper'
+            - '@language'
+            - '@pagination'
+            - '@request'
+            - '@template'
+            - '@user'
+            - '@steve.calendar.calendar'
+            - '@steve.calendar.date_time'
+            - '%steve.calendar.tables.calendar_events%'
+            
+    steve.calendar.date_time:
+        class: steve\calendar\calendar\date_time
+        arguments:
+            - '@config'
+            - '@user'
+
+    steve.calendar.event_posting:
+        class: steve\calendar\calendar\event_posting
+        arguments:
+            - '@auth'
+            - '@config'
+            - '@dbal.conn'
+            - '@controller.helper'
+            - '@language'
+            - '@template'
+            - '@user'
+            - '%core.php_ext%'
+            - '%core.root_path%'
+            - '@steve.calendar.date_time'
+            - '%steve.calendar.tables.calendar_events%'
+
+    steve.calendar.upcoming_events:
+        class: steve\calendar\calendar\upcoming_events
+        arguments:
+            - '@auth'
+            - '@config'
+            - '@dbal.conn'
+            - '@controller.helper'
+            - '@language'
+            - '@notification_manager'
+            - '@user'
+            - '@steve.calendar.date_time'            
+            - '%steve.calendar.tables.calendar_events%'
+            - '%steve.calendar.tables.calendar_events_attending%'
+
+    steve.calendar.routing:
+        class: steve\calendar\calendar\routing
+        arguments:
+            - '@auth'
+            - '@config'
+            - '@controller.helper'
+            - '@language'
+            - '@template'
+            - '@steve.calendar.date_time'
+
+    steve.calendar.listener:
+        class: steve\calendar\event\listener
+        arguments:
+            - '@auth'
+            - '@config'
+            - '@controller.helper'
+            - '@language'
+            - '@template'
+            - '%core.php_ext%'
+            - '@steve.calendar.calendar'
+            - '@?phpbb.collapsiblecategories.operator'
+        tags:
+            - { name: event.listener }
+
+    steve.calendar.notification.type.upcoming_event:
+        class: steve\calendar\notification\type\upcoming_event
+        shared: false
+        parent: notification.type.base
+        calls:
+            - [set_config, ['@config']]
+            - [set_user_loader, ['@user_loader']]
+            - [set_controller_helper, ['@controller.helper']]
+        tags:
+            - { name: notification.type }
+
+    steve.calendar.cron.task.calendar_cron_task:
+        class: steve\calendar\cron\task\calendar_cron_task
+        arguments:
+            - '@config'
+            - '@steve.calendar.upcoming_events'
+        calls:
+            - [set_name, [cron.task.calendar_cron_task]]
+        tags:
+            - { name: cron.task }

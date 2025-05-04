@@ -1,0 +1,42 @@
+steve_calendar_year:
+    path: /Calendar/{year}
+    methods: [GET]
+    defaults: { _controller: steve.calendar.calendar_view:view_year }
+
+steve_calendar_month:
+    path: /Calendar/{month}/{year}
+    methods: [GET]
+    defaults: { _controller: steve.calendar.calendar_view:view_month }
+
+steve_calendar_day:
+    path: /Calendar/{day_string}/{day}/{month}/{year}
+    methods: [GET]
+    defaults: { _controller: steve.calendar.calendar_view:view_day }
+
+steve_calendar_day:
+    path: /Calendar/Event/{event_id}
+    methods: [GET]
+    defaults: { _controller: steve.calendar.calendar_event:event }
+    
+steve_calendar_search:
+    path: /Calendar_search/{action}
+    methods: [GET]
+    defaults: { _controller: steve.calendar.search:search }
+    requirements:
+        action: results|advanced
+        
+steve_calendar_add_event:
+    path: /Calendar_Actions/{action}/{event_id}
+    defaults: { _controller: steve.calendar.actions:event_actions }
+    requirements:
+        action: add|edit
+        
+steve_calendar_delete_event:
+    path: /Calendar_Event/delete/{event_id}
+    defaults: { _controller: steve.calendar.actions:delete_event }
+
+steve_calendar_attend_event:
+    path: /Calendar_Event_attend/{action}/{event_id}/{year}
+    defaults: { _controller: steve.calendar.attend_event:attend }
+    requirements:
+        action: attend|unattend|attended

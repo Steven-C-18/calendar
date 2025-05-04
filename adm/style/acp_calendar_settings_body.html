@@ -1,0 +1,147 @@
+{% INCLUDE 'overall_header.html' %}
+<style>
+.acp_donate, .acp_support, .acp_extensions {
+	font-size: 13px;
+	text-align: center;
+	opacity: 0.8;
+	color: #ffffff !important;
+	margin: 4px;
+	padding: 7px;
+	border-radius: 5px;
+}
+
+.acp_donate { background-color: #002991; }
+
+.acp_support { 
+	background-color: green;
+	color: #ffff32 !important; 
+}
+
+.acp_extensions { background-color: purple; }
+.fa-gradient-beer { background: linear-gradient(white 0.1px, orange 7px, orange 8px); }
+.icon { font-size: 22px; }
+
+i.icon-beer {
+	font-size: 22px;
+	background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+</style>
+
+<a id="maincontent"></a>
+
+	<fieldset>
+		<div style="margin: 5px;float: right;">
+			<a href="https://steven-clark.tech/phpBB3/viewforum.php?f=11" target="_blank" class="acp_support">
+				<i class="icon fa-medkit fa-fw" aria-hidden="true"></i><span class="responsive-hide"> {{ lang('ACP_STEVE_HELP') }}</span>
+			</a>
+			<a href="https://steven-clark.tech/phpBB3/viewforum.php?f=5" target="_blank" class="acp_extensions">
+				<i class="icon fa-puzzle-piece fa-fw" aria-hidden="true"></i><span class="responsive-hide"> {{ lang('ACP_STEVE_EXTENSIONS') }}</span>
+			</a>
+			<a href="https://www.paypal.com/paypalme/StevenClark80?country.x=GB&locale.x=en_GB" target="_blank" class="acp_donate">
+				<i class="icon fa-paypal icon-donate fa-fw" aria-hidden="true"></i> {{ lang('ACP_STEVE_DONATE') }} <i class="icon fa-beer icon-beer fa-gradient-beer fa-fw" aria-hidden="true"></i>
+			</a>		
+		</div>
+		
+		<h1>{{ lang('ACP_CALENDAR_SETTINGS') }}</h1>
+		<p>{{ lang('ACP_CALENDAR_SETTINGS_EXPLAIN') }}</p>
+	</fieldset>
+
+<form id="acp_board" method="post" action="{{ U_ACTION }}">
+
+	<fieldset>
+		<dl>
+			<dt><label for="calendar_enabled1">{{ lang('ACP_CALENDAR_ENABLE') }}{{ lang('COLON') }}</label></dt>
+			<dd><input type="radio" class="radio" name="calendar_enabled" id="calendar_enabled1" value="1" {% if CALENDAR_ENABLED %}checked="checked"{% endif %} /> {{ lang('YES') }} &nbsp;
+				<input type="radio" class="radio" name="calendar_enabled" id="calendar_enabled0" value="0" {% if not CALENDAR_ENABLED %}checked="checked"{% endif %} /> {{ lang('NO') }}</dd>
+		</dl>
+	</fieldset>
+	
+	<fieldset>
+	<legend>{{ lang('ACP_CALENDAR_POST_SETTINGS') }}</legend>
+		<dl>
+			<dt><label for="calendar_event_post_enable1">{{ lang('ACP_CALENDAR_EVENT_POST_ENABLE') }}{{ lang('COLON') }}</label><br><span>{{ lang('ACP_CALENDAR_EVENT_POST_ENABLE_EXPLAIN') }}</span></dt>
+			<dd><input type="radio" class="radio" name="calendar_event_post_enable" id="calendar_event_post_enable1" value="1" {% if CALENDAR_EVENT_POST_ENABLE %}checked="checked"{% endif %} /> {{ lang('YES') }} &nbsp;
+				<input type="radio" class="radio" name="calendar_event_post_enable" id="calendar_event_post_enable0" value="0" {% if not CALENDAR_EVENT_POST_ENABLE %}checked="checked"{% endif %} /> {{ lang('NO') }}</dd>
+		</dl>
+		<dl>
+			<dt><label>{{ lang('ACP_CALENDAR_EVENT_ICON_ID') }}{{ lang('COLON') }}</label><br><span>{{ lang('ACP_CALENDAR_EVENT_ICON_ID_EXPLAIN') }}</span></dt>
+			<dd>
+			<select name="calendar_event_forum_id">{{ FORUM_BOX }}</select>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="icon">{{ lang('ACP_CALENDAR_EVENT_ICON_ID') }}{{ lang('COLON') }}</label><br><span>{{ lang('ACP_CALENDAR_EVENT_ICON_ID_EXPLAIN') }}</span></dt>
+		<dd>
+			<label for="icon"><input type="radio" name="icon" id="icon" value="0" checked="checked" tabindex="1" /> {{ lang('NO_TOPIC_ICON') }}</label>
+			{% for topic_icon in loops.topic_icon %}<label for="icon-{{ topic_icon.ICON_ID }}"><input type="radio" name="icon" id="icon-{{ topic_icon.ICON_ID }}" value="{{ topic_icon.ICON_ID }}" {{ topic_icon.S_ICON_CHECKED }} tabindex="1" /><img src="{{ topic_icon.ICON_IMG }}" width="{{ topic_icon.ICON_WIDTH }}" height="{{ topic_icon.ICON_HEIGHT }}" alt="{{ topic_icon.ICON_ALT }}" title="{{ topic_icon.ICON_ALT }}" /></label> {% endfor %}
+		</dd>
+	</dl>	
+	</fieldset>
+
+	<fieldset>
+		<legend>{{ lang('GENERAL_SETTINGS') }}</legend>
+		<dl>
+			<dt><label for="calendar_default_link">{{ lang('ACP_CALENDAR_DEFAULT_LINK') }}{{ lang('COLON') }}</label><br><span>{{ lang('ACP_CALENDAR_DEFAULT_LINK_EXPLAIN') }}</span></dt>
+			<dd><select name="calendar_default_link" id="calendar_default_link">
+					{{ S_CALENDAR_DEFAULT_LINK }}
+				</select>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="calendar_event_index1">{{ lang('ACP_CALENDAR_EVENT_INDEX_ENABLE') }}{{ lang('COLON') }}</label></dt>
+			<dd><input type="radio" class="radio" name="calendar_event_index" id="calendar_event_index1" value="1" {% if CALENDAR_EVENT_INDEX %}checked="checked"{% endif %} /> {{ lang('YES') }} &nbsp;
+				<input type="radio" class="radio" name="calendar_event_index" id="calendar_event_index0" value="0" {% if not CALENDAR_EVENT_INDEX %}checked="checked"{% endif %} /> {{ lang('NO') }}</dd>
+		</dl>
+		<dl>
+			<dt><label for="calendar_above_forums_index">{{ lang('ACP_CALENDAR_ABOVE_FORUMS_INDEX') }}{{ lang('COLON') }}</label></dt>
+			<dd><input type="radio" class="radio" name="calendar_above_forums_index" value="1" {% if CALENDAR_ABOVE_FORUMS_INDEX %}id="calendar_above_forums_index" checked="checked"{% endif %} /> {{ lang('YES') }} &nbsp;
+				<input type="radio" class="radio" name="calendar_above_forums_index" value="0" {% if not CALENDAR_ABOVE_FORUMS_INDEX %}id="calendar_above_forums_index" checked="checked"{% endif %} /> {{ lang('NO') }}</dd>
+		</dl>	
+		<dl>
+			<dt><label for="calendar_enable_birthdays">{{ lang('ACP_CALENDAR_ENABLE_BIRTHDAYS') }}{{ lang('COLON') }}</label></dt>
+			<dd><input type="radio" class="radio" name="calendar_enable_birthdays" value="1" {% if CALENDAR_ENABLE_BIRTHDAYS %}id="calendar_enable_birthdays" checked="checked"{% endif %} /> {{ lang('YES') }} &nbsp;
+				<input type="radio" class="radio" name="calendar_enable_birthdays" value="0" {% if not CALENDAR_ENABLE_BIRTHDAYS %}id="calendar_enable_birthdays" checked="checked"{% endif %} /> {{ lang('NO') }}</dd>
+		</dl>
+		<dl>
+			<dt><label for="calendar_enable_notifications">{{ lang('ACP_CALENDAR_ENABLE_NOTIFICATIONS') }}{{ lang('COLON') }}</label></dt>
+			<dd><input type="radio" class="radio" name="calendar_enable_notifications" value="1" {% if CALENDAR_ENABLE_NOTIFICATIONS %}id="calendar_enable_notifications" checked="checked"{% endif %} /> {{ lang('YES') }} &nbsp;
+				<input type="radio" class="radio" name="calendar_enable_notifications" value="0" {% if not CALENDAR_ENABLE_NOTIFICATIONS %}id="calendar_enable_notifications" checked="checked"{% endif %} /> {{ lang('NO') }}</dd>
+		</dl>		
+		
+		<dl>
+			<dt><label for="calendar_event_limit">{{ lang('ACP_CALENDAR_EVENT_LIMIT') }}{{ lang('COLON') }}</label><br><span>{{ lang('ACP_CALENDAR_EVENT_LIMIT_EXPLAIN') }}</span></dt>
+			<dd><input id="calendar_event_limit" type="number" name="calendar_event_limit" min="1" value="{{ CALENDAR_EVENT_LIMIT }}" /></dd>
+		</dl>
+	</fieldset>
+	
+	<fieldset>
+		<legend>{{ lang('ACP_CALENDAR_SCHEDULED_TASK_SETTINGS') }}</legend>
+		<dl>
+			<dt><label for="calendar_event_remind">{{ lang('ACP_CALENDAR_EVENT_REMIND') }}{{ lang('COLON') }}</label><br><span>{{ lang('ACP_CALENDAR_EVENT_REMIND_EXPLAIN') }}</span></dt>
+			<dd><input id="calendar_event_remind" type="number" name="calendar_event_remind" min="1" value="{{ CALENDAR_EVENT_REMIND }}" /> {{ lang('DAYS') }}</dd>
+		</dl>		
+		<dl>
+			<dt><label for="calendar_cache_time">{{ lang('ACP_CALENDAR_CACHE_TIME') }}{{ lang('COLON') }}</label><br><span>{{ lang('ACP_CALENDAR_CACHE_TIME_EXPLAIN') }}</span></dt>
+			<dd><input id="calendar_cache_time" type="number" name="calendar_cache_time" min="300" max="86400" value="{{ CALENDAR_CACHE_TIME }}" /> {{ lang('SECONDS') }}</dd>
+		</dl>
+		<dl>
+			<dt><label for="calendar_cron_task_gc">{{ lang('ACP_CALENDAR_CRON_TASK_GC') }}{{ lang('COLON') }}</label><br><span>{{ lang('ACP_CALENDAR_CRON_TASK_GC_EXPLAIN') }}</span></dt>
+			<dd><input id="calendar_cron_task_gc" type="number" name="calendar_cron_task_gc" min="300" max="86400" value="{{ CALENDAR_CRON_TASK_GC }}" /> {{ lang('SECONDS') }} {{ CALENDAR_CRON_LAST_GC }}</dd>
+		</dl>
+	</fieldset>
+	
+	<fieldset>
+	<legend>{{ lang('ACP_SUBMIT_CHANGES') }}</legend>
+		<p class="submit-buttons">
+			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}" />
+		</p>
+		{{ S_FORM_TOKEN }}
+	</fieldset>
+	
+</form>
+
+{% INCLUDE 'overall_footer.html' %}

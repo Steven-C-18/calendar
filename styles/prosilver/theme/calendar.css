@@ -1,0 +1,111 @@
+/**
+	* Events calendar $extends the phpBB Software package.
+	* @copyright (c) 2024, Steve, https://steven-clark.tech/
+	* @license GNU General Public License, version 2 (GPL-2.0)
+*/
+
+#months {
+	height: 299px;
+	background: #eee;
+	border: 5px solid #ffffff;
+	box-shadow: 1px 2px 3px #808080;
+  	-moz-box-shadow: 1px 2px 3px #808080;
+	-webkit-box-shadow: 1px 2px 3px #808080;
+	color: #808080;
+	font-weight: bold;
+	border-radius: 5px;
+	margin: 5px 0;
+}
+.calendar {
+	height: 299px;
+	width: auto;
+	margin: 5px auto;
+}
+
+.calendar-month { margin: 0; }
+
+.calendar-search {
+	margin-bottom: 1px;
+	color: #808080;
+	font-weight: bold;
+	font-size: 14px;
+}
+.month {
+	text-align: center;
+	padding: 5px 0;
+}
+.day span.days {
+	height: 15px;
+	width: 100%;
+	padding: 5px 0;	
+	text-align: center;
+	background: #ccc;
+	border: 1px solid #eee;
+	border-bottom: 2px solid #fff;
+	border-top: 3px solid #fff;
+}
+.day {
+	display: grid;	
+	grid-template-columns: repeat(7, 1fr);
+	overflow: hidden;	
+	border-right: 1px solid #eee;
+}
+.day a {
+	height: 40px;
+	width: 100%;
+	text-align: right;
+	border-bottom: 1px solid #eee;
+	border-left: 1px solid #eee;
+	background: #ffffff;
+	color: #808080;
+	overflow: hidden;
+}
+.day a.pad {
+	height: 40px;
+	width: 100%;
+	background: #eee;
+}
+.day a span {
+	padding: 5px;
+	border-bottom: 1px solid #eee;
+	border-left: 1px solid #eee;
+	background: #ffffff;
+}
+.day a.event-now {
+	background: #ccc !important;
+	color: #000000 !important;
+}
+i.event-status {
+	float: left;
+	font-weight: normal;
+	padding: 0;
+	margin: 0;
+}
+.event-status {	
+	padding: 5px;
+	margin: 5px	auto;
+	text-align: center;
+	font-weight: bold;	
+}
+
+.active-event { color: green; }
+.annual-event { color: blue; }
+.expired-event { color: red; }
+
+.day-status li {
+	list-style: none;	
+	float: left;
+	padding: 10px;
+	margin: 0 auto;
+	text-align: center;
+	color: #808080;
+	font-weight: bold;	
+	box-shadow: 1px 2px 3px #808080;
+  	-moz-box-shadow: 1px 2px 3px #808080;
+	-webkit-box-shadow: 1px 2px 3px #808080;
+	background: #fff;
+}
+.loader {
+	background: url("./ext/steve/calendar/images/loader-large.gif") no-repeat center;
+	background-size: 50px 50px;
+}

@@ -1,0 +1,43 @@
+	<div class="panel">
+		<div class="inner">
+			
+			<span class="event-status">
+				<i class="icon fa-globe fa-fw" aria-hidden="true"></i>{{ lang('EVENT_WORLD_DAY') }}			
+				<a href="{{ NOW_URL }}"><i class="icon event-now fa-clock-o fa-fw" aria-hidden="true"></i>{{ lang('EVENT_NOW') }}</a>
+				{% if CALENDAR_ENABLE_BIRTHDAYS %}<a href="#"><i class="icon annual-event fa-birthday-cake icon-orange fa-fw" aria-hidden="true"></i>{{ lang('BIRTHDAYS') }}</a>{% endif %}
+				<i class="icon annual-event fa-calendar fa-fw" aria-hidden="true"></i>{{ lang('ANNUAL') }}
+				<a href="{{ NOW_URL }}"><i class="icon event-now fa-calendar-check-o fa-fw" aria-hidden="true"></i>{{ lang('EVENTS_NOW') }}</a>
+				<i class="icon fa-calendar-check-o active-event fa-fw" aria-hidden="true"></i>{{ lang('EVENT_ACTIVE') }}
+				<i class="icon expired-event fa-calendar-minus-o fa-fw" aria-hidden="true"></i>{{ lang('EVENT_EXPIRED') }}
+
+			{% if U_ADD_EVENT %}
+				<a href="{{ U_ADD_EVENT }}" class="hi-days"><i class="icon fa-calendar-plus-o icon-green fa-fw" aria-hidden="true"></i>{{ lang('ADD_EVENT') }}</a>
+			{% endif %}
+			</span>
+			
+			{% if S_DISPLAY_SEARCH and U_SEARCH_CALENDAR %}
+			<div class="search-box calendar-shadow" role="search" style="float: right;">
+				<form action="{{ U_SEARCH_CALENDAR }}" method="get" id="calendar_search">
+				<fieldset>
+					<input name="calendar_keywords" id="calendar_keywords" type="search" maxlength="128" title="{{ lang('SEARCH') }}" class="inputbox search tiny" size="20" value="{{ SEARCH_WORDS }}" placeholder="{{ lang('SEARCH_MINI') }}" />
+					<button class="button button-search" type="submit" title="{{ lang('SEARCH') }}">
+						<i class="icon fa-search fa-fw" aria-hidden="true"></i><span class="sr-only">{{ lang('SEARCH') }}</span>
+					</button>
+					{{ S_SEARCH_HIDDEN_FIELDS }}
+				</fieldset>
+				</form>
+			</div>
+			{% endif %}
+			
+		</div>
+	</div>
+	
+	{% if not SEARCH_CALENDAR %}
+	<div class="panel" style="text-align: center;font-weight: bold;">
+		<div class="inner">
+			<a href="{{ PREV_YEAR_URL }}">{{ PREV_YEAR }}&nbsp;<i class="icon fa-chevron-circle-left" aria-hidden="true"></i></a> 
+			<a href="{{ YEAR_URL }}">{{ YEAR }}</a> 
+			<a href="{{ NEXT_YEAR_URL }}">&nbsp;<i class="icon fa-chevron-circle-right" aria-hidden="true"></i>{{ NEXT_YEAR }}</a>
+		</div>
+	</div>
+	{% endif %}

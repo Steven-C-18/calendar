@@ -1,0 +1,9 @@
+Subject: Event Reminder
+
+You are receiving this notification because an Event is upcoming. You can view the Event using the link below.
+
+{{ URL }}
+
+You have requested that you be notified on this event, remember that you can always choose not to be notified of Upcoming Events by changing the appropriate setting in your profile.
+
+{{ EMAIL_SIG }}

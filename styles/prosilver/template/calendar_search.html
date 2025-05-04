@@ -1,0 +1,77 @@
+{% INCLUDE 'overall_header.html' %}
+	
+{% INCLUDE 'calendar_top.html' %}
+	
+	<h3>{{ FOUND }}</h3>
+
+	{% for events in loops.events %}
+	<div id="event-{{ events.EVENT_ID }}">
+	<div class="panel">
+		<div class="inner">
+
+			<div class="dropdown-container dropdown-left" style="float: right">
+			{{ lang('EVENT_BY') }}{{ lang('COLON') }} {% if events.USER_AVATAR_URL %}<a href="{{ events.USER_AVATAR_URL }}" class="header-avatar">{{ events.USER_AVATAR }}</a>{% endif %} {{ events.USER_NAME }}
+			{% if events.U_EDIT or events.U_DELETE or events.U_ATTEND %}
+			<a href="#" class="dropdown-trigger" title="{{ lang('OPTIONS') }}"><i class="icon fa-caret-down fa-fw" aria-hidden="true"></i>{{ lang('OPTIONS') }}</a>
+			<div class="dropdown">
+				<div class="pointer"><div class="pointer-inner"></div></div>
+					<ul class="dropdown-contents">
+						{% if events.U_EDIT %}
+						<li><a href="{{ events.U_EDIT }}"><i class="icon fa-pencil-square-o fa-fw" aria-hidden="true"></i>{{ lang('EDIT_EVENT') }}</a></li>
+						{% endif %}							
+						{% if events.U_DELETE %}
+						<li><a id="delete_event_{{ events.EVENT_ID }}" href="{{ events.U_DELETE }}" data-refresh="true" data-ajax="delete_event"><i class="icon icon-red fa-calendar-minus-o fa-fw" aria-hidden="true"></i>{{ lang('DELETE_EVENT') }}</a></li>
+						{% endif %}								
+						{% if events.U_ATTEND %}
+						<li><a id="attend_{{ events.EVENT_ID }}" href="{{ events.U_ATTEND }}" data-refresh="true" data-ajax="attend" title="{{ lang('ATTEND_EVENT') }}"><i class="icon icon-green fa-user-plus fa-fw" aria-hidden="true"></i>{{ lang('ATTEND_EVENT') }}</a></li>
+						{% endif %}
+					</ul>
+				</div>
+			{% endif %}
+			</div>	
+			
+			<a href="{{ events.U_EVENT }}" class="forumtitle"><i class="icon {{ events.FA }} {{ events.CLASS }} fa-fw" aria-hidden="true"></i> {{ events.TITLE }}</a><br />		
+			<strong>{{ events.DAY_STRING }} {{ events.DAY }}</strong> {{ events.TIME }} ({{ events.TIME_STAMP }}) <i class="icon fa-globe fa-fw" aria-hidden="true" title="{{ events.TIME_ZONE }}"></i>
+			<div class="clear"></div>
+			{% if events.INFORMATION %}
+			<div class="post">{{ events.INFORMATION }}</div>
+			{% endif %}
+
+			{% if events.attendees %}
+			{{ ATTENDING }} {{ lang('ATTENDING_EVENT') }}{{ lang('COLON') }}
+			{% for attendees in events.attendees %}
+			{% if attendees.U_UNATTEND %}
+			<a id="unattend_{{ events.EVENT_ID }}" href="{{ attendees.U_UNATTEND }}" data-refresh="true" data-ajax="attend" title="{{ lang('UNATTEND_EVENT') }}"><i class="icon icon-red fa-user-times fa-fw" aria-hidden="true"></i> </a>
+			{% endif %}
+			{% if events.U_ATTEND && events.U_ATTENDED %}
+			<a id="attended_{{ events.EVENT_ID }}" href="{{ attendees.U_ATTENDED }}" data-refresh="true" data-ajax="attended" title="{{ lang('ATTENDED') }}"><i class="icon icon-green fa-user-plus fa-fw" aria-hidden="true"></i> </a>
+			{% endif %}	
+				{{ attendees.USER_NAME }}{% if not attendees.S_LAST_ROW %}{{ lang('COMMA_SEPARATOR') }} {% endif %}
+			{% endfor %}
+			{% endif %}
+			{% if events.attended %}
+			{% for attended in events.attended %}
+			{{ lang('ATTENDED_EVENT') }}{{ lang('COLON') }}	{{ attended.USER_NAME }}{% if not attended.S_LAST_ROW %}{{ lang('COMMA_SEPARATOR') }} {% endif %}
+			{% endfor %}
+			{% endif %}		
+			</div>
+		</div>
+	</div>
+	{% else %}
+	<div class="panel">
+		<div class="inner">	
+			{{ lang('NO_EVENTS') }}
+		</div>
+	</div>	
+	{% endfor %}
+	
+	<div class="action-bar bar-top">
+		<div class="pagination">
+		{% if PAGE_NUMBER %}{{ PAGE_NUMBER }}{% endif %}
+		{% if loops.pagination|length %}
+			{% INCLUDE 'pagination.html' %}
+		{% endif %}
+		</div>
+	</div>
+	
+{% INCLUDE 'overall_footer.html' %}

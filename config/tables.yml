@@ -1,0 +1,3 @@
+parameters:
+    steve.calendar.tables.calendar_events: '%core.table_prefix%steve_calendar_events'
+    steve.calendar.tables.calendar_events_attending: '%core.table_prefix%steve_calendar_events_attending'

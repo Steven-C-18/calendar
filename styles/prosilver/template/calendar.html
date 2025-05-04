@@ -1,0 +1,87 @@
+{% INCLUDE 'overall_header.html' %}
+
+{% INCLUDE 'calendar_top.html' %}
+	
+{% if not VIEW_YEAR %}	
+	{% INCLUDE 'calendar_view.html' %}
+	
+{% if CALENDAR_ENABLE_BIRTHDAYS && S_DISPLAY_BIRTHDAY_LIST && calendar_birthdays %}
+	<div class="column1">
+
+	<div class="panel">
+		<div class="inner">
+		<h2>{{ lang('BIRTHDAYS') }}</h2>
+		{% for calendar_birthdays in loops.calendar_birthdays %}
+			<p>{{ calendar_birthdays.USER }} ({{ calendar_birthdays.AGE }}){% if not calendar_birthdays.S_LAST_ROW %}{{ lang('COMMA_SEPARATOR') }} {% endif %}</p>
+		{% endfor %}
+		</div>
+	</div>
+
+	</div>
+	<div class="column2">
+{% endif %}
+	
+	<div class="action-bar bar-top">
+		<div class="pagination">
+		{% if PAGE_NUMBER %}<strong>{{ lang('CALENDAR_RESULTS') ~ lang('COLON') }} {{ PAGE_NUMBER }}</strong>{% endif %}
+		{% if loops.pagination|length %}
+			{% INCLUDE 'pagination.html' %}
+		{% endif %}
+		</div>
+	</div>
+				
+	<h3>{{ lang('EVENTS_FOR') }} {% if EVENT_DAY %}{{ EVENT_DAY }} {{ DAY_J }}{% endif %} {{ MONTH_YEAR }}</h3>
+	
+	{% for events in loops.events %}
+	<div id="event-{{ events.EVENT_ID }}">
+		<div class="panel">
+			<div class="inner">
+
+		{% INCLUDE 'event_info.html' %}
+
+		{% if events.attendees %}		
+			<hr>
+			{{ ATTENDING }} {{ lang('ATTENDING_EVENT') }}{{ lang('COLON') }}
+			
+		{% for attendees in events.attendees %}
+			{% if attendees.U_UNATTEND %}
+				<a id="unattend_{{ events.EVENT_ID }}" href="{{ attendees.U_UNATTEND }}" data-refresh="true" data-ajax="attend" title="{{ lang('UNATTEND_EVENT') }}"><i class="icon icon-red fa-user-times fa-fw" aria-hidden="true"></i> </a>
+			{% endif %}
+			{% if attendees.U_ATTENDED %}
+				<a id="attended_{{ events.EVENT_ID }}" href="{{ attendees.U_ATTENDED }}" data-refresh="true" data-ajax="attended" title="{{ lang('ATTENDED') }}"><i class="icon icon-green fa-user-plus fa-fw" aria-hidden="true"></i> </a>
+			{% endif %}					
+				{{ attendees.USER_NAME }}{% if not attendees.S_LAST_ROW %}{{ lang('COMMA_SEPARATOR') }} {% endif %}
+		{% endfor %}
+			{% endif %}
+			{% if events.attended %}
+			<br>
+			{% for attended in events.attended %}
+				{{ lang('ATTENDED_EVENT') }}{{ lang('COLON') }}	{{ attended.USER_NAME }}{% if not attended.S_LAST_ROW %}{{ lang('COMMA_SEPARATOR') }} {% endif %}
+			{% endfor %}
+		{% endif %}
+			
+			</div>
+		</div>
+	</div>
+	{% else %}
+	{{ lang('NO_EVENTS') }}	
+	{% endfor %}
+	
+	<div class="action-bar bar-bottom">
+		<div class="pagination">
+		{% if PAGE_NUMBER %}<strong>{{ lang('CALENDAR_RESULTS') ~ lang('COLON') }} {{ PAGE_NUMBER }}</strong>{% endif %}
+		{% if loops.pagination|length %}
+			{% INCLUDE 'pagination.html' %}
+		{% endif %}
+		</div>
+	</div>
+	
+{% if CALENDAR_ENABLE_BIRTHDAYS && S_DISPLAY_BIRTHDAY_LIST && calendar_birthdays %}
+</div>
+{% endif %}
+
+{% else %}
+	{% INCLUDE 'calendar_view.html' %}
+{% endif %}
+
+{% INCLUDE 'overall_footer.html' %}
