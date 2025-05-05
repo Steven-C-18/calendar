@@ -10,7 +10,7 @@ services:
             - '@controller.helper'
             - '@language'
             - '@pagination'
-            - '@template'            
+            - '@template'
             - '@steve.calendar.calendar'
             - '@steve.calendar.routing'
 

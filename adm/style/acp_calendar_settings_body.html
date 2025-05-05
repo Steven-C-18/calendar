@@ -46,7 +46,6 @@ i.icon-beer {
 		</div>
 		
 		<h1>{{ lang('ACP_CALENDAR_SETTINGS') }}</h1>
-		<p>{{ lang('ACP_CALENDAR_SETTINGS_EXPLAIN') }}</p>
 	</fieldset>
 
 <form id="acp_board" method="post" action="{{ U_ACTION }}">
@@ -67,7 +66,7 @@ i.icon-beer {
 				<input type="radio" class="radio" name="calendar_event_post_enable" id="calendar_event_post_enable0" value="0" {% if not CALENDAR_EVENT_POST_ENABLE %}checked="checked"{% endif %} /> {{ lang('NO') }}</dd>
 		</dl>
 		<dl>
-			<dt><label>{{ lang('ACP_CALENDAR_EVENT_ICON_ID') }}{{ lang('COLON') }}</label><br><span>{{ lang('ACP_CALENDAR_EVENT_ICON_ID_EXPLAIN') }}</span></dt>
+			<dt><label>{{ lang('ACP_CALENDAR_EVENT_FORUM_ID') }}{{ lang('COLON') }}</label></dt>
 			<dd>
 			<select name="calendar_event_forum_id">{{ FORUM_BOX }}</select>
 			</dd>

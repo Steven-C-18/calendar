@@ -144,7 +144,7 @@ class upcoming_events
 						'title'			=> censor_text($event['title']),
 					]);
 				}
-			}	
+			}
 		}
 		unset($events, $attendees[$event['event_id']]);
 		

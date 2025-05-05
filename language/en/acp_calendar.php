@@ -30,8 +30,7 @@ $lang = array_merge($lang, array(
 	'ACP_CALENDAR_DONATE'						=> 'Donate',
 	
 	'ACP_CALENDAR_ENABLE'						=> 'Enable Calendar',
-	'ACP_calendar_event_icon_id'				=> 'New Event Topic Forum id',
-	'ACP_calendar_event_icon_id_EXPLAIN'		=> '',
+	'ACP_CALENDAR_EVENT_FORUM_ID'				=> 'New event topic forum',
 	'ACP_CALENDAR_EVENT_ICON_ID'				=> 'New Topic Icon',
 	'ACP_CALENDAR_EVENT_ICON_ID_EXPLAIN'		=> 'Topic icon to be used with Topic Events',
 	'ACP_CALENDAR_EVENT_INDEX_ENABLE'			=> 'Upcoming Events on Index',
@@ -50,24 +49,23 @@ $lang = array_merge($lang, array(
 	'ACP_CALENDAR_SCHEDULED_TASK_SETTINGS'		=> 'Scheduled Tasks',
 	
 	
-	'ACP_CALENDAR_SETTINGS'				=> 'Settings',
-	'ACP_CALENDAR_SETTINGS_EXPLAIN'		=> 'Explain...',
+	'ACP_CALENDAR_SETTINGS'				=> 'Calendar Settings',
+	'ACP_CALENDAR_SETTINGS_EXPLAIN'		=> '',
 	'ACP_CALENDAR_SETTING_SAVED'		=> 'Calendar settings saved successfully.',
 	'ACP_CALENDAR_TITLE'				=> 'Calendar',
 
 	'ACP_SELECT_CALENDAR_DEFAULT_LINK' 	=> 'Select Default URL',
 	'NO_TOPIC_ICON'						=> 'No Topic Icon',
-	'LAST_RUN'							=> ' ,Last Run:',//--
+	'LAST_RUN'							=> ', Last Run:',
 
 	'ACP_CALENDAR_DEFAULT_LINK'			=> 'Calendar page default link',
 
 	'ACP_CALENDAR_DEFAULT_LINK_EXPLAIN'	=> 'Navigation link takes you to either: year, month, day(now).',
 
-//
 	'ACP_CALENDAR_DAY'			=> 'Day',
 	'ACP_CALENDAR_MONTH'		=> 'Month',
 	'ACP_CALENDAR_YEAR'			=> 'Year',
-//
+
 	'MONDAY'		=> 'Monday',
 	'TUESDAY'		=> 'Tuesday',
 	'WEDNESDAY'		=> 'Wednesday',

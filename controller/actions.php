@@ -43,7 +43,7 @@ class actions
 		$calendar_events_attending)
 	{
 		$this->auth = $auth;
-		$this->config = $config;		
+		$this->config = $config;
 		$this->db = $db;	
 		$this->helper = $helper;
 		$this->language = $language;
