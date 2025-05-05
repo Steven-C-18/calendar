@@ -3,7 +3,7 @@
     "type": "phpbb-extension",
     "description": "An Extension for phpBB that will add a calendar to your phpBB forum.",
     "homepage": "https://steven-clark.tech/phpBB3",
-    "version": "0.9.5-dev",
+    "version": "0.9.6-dev",
     "time": "2025-4-5",
     "license": "GPL-2.0",
     "authors": [

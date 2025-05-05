@@ -223,7 +223,7 @@ class event_posting
 		$forum = $this->db->sql_fetchrow($result);
 		$this->db->sql_freeresult($result);
 		
-		$icon_id = (int) $this->config['calendar_event_forum_id'];
+		$icon_id = (int) $this->config['calendar_event_icon_id'];
 		if (empty($this->config['calendar_event_post_enable']) || empty($topic_title) || empty($topic_message) || empty($forum['forum_id']))
 		{
 			return false;
