@@ -16,7 +16,6 @@ class upcoming_events
 	protected $language;
 	protected $notification_manager;
 	protected $user;
-	
 	protected $date;
 	protected $calendar_events;
 	protected $calendar_events_attending;
@@ -29,7 +28,6 @@ class upcoming_events
 		\phpbb\language\language $language,
 		\phpbb\notification\manager $notification_manager,
 		\phpbb\user $user,
-		
 		\steve\calendar\calendar\date_time $date,
 		$calendar_events,
 		$calendar_events_attending)
@@ -41,7 +39,6 @@ class upcoming_events
 		$this->language = $language;
 		$this->notification_manager = $notification_manager;
 		$this->user = $user;
-		
 		$this->date_time = $date;
 		$this->table_calendar_events = $calendar_events;
 		$this->table_events_attending = $calendar_events_attending;
