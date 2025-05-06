@@ -53,7 +53,7 @@ class calendar_module
 					{
 						trigger_error($user->lang('FORM_INVALID') . adm_back_link($this->u_action), E_USER_WARNING);
 					}
-					if (!empty($form_data['calendar_event_post_enable']) && empty($form_data['calendar_event_icon_id']))
+					if (!empty($form_data['calendar_event_post_enable']) && empty($form_data['calendar_event_forum_id']))
 					{
 						trigger_error($user->lang('ACP_CALENDAR_FORUM_ID_EMPTY') . adm_back_link($this->u_action), E_USER_WARNING);
 					}
