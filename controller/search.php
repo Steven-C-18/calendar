@@ -12,6 +12,7 @@ class search
 	protected $auth;
 	protected $config;
 	protected $db;
+	protected $helper;
 	protected $language;
 	protected $pagination;
 	protected $request;
