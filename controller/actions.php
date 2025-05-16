@@ -313,7 +313,7 @@ class actions
 				
 				$this->db->sql_transaction('commit');
 
-				meta_refresh(3, $route);
+				meta_refresh(1, $route);
 				throw new \phpbb\exception\http_exception(200, $action == 'add' ? 'EVENT_ADDED' : 'EVENT_EDITED', [$route]);
 			}
 		}
